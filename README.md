@@ -24,6 +24,6 @@ GET history gacha semua user ke http://localhost:5000/api/gacha/history
 
 GET history gacha khusus 1 user dengan http://localhost:5000/api/gacha/history/:username misalnya http://localhost:5000/api/gacha/livi
 
-GET data hadiah serta quota yang tersisa melalui http://localhost:5000/api/prizes
+GET data hadiah serta quota yang tersisa melalui http://localhost:5000/api/gacha/prizes
 
-GET data pemenang gacha melalui http://localhost:5000/api/winners
+GET data pemenang gacha melalui http://localhost:5000/api/gacha/winners
