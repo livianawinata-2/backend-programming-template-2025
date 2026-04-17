@@ -10,6 +10,12 @@ const getPrize = (prizes) => {
 };
 
 async function lakukanGacha(username) {
+  if (!username) {
+    throw new Error('username wajib diisi');
+  }
+
+  await gachaRepository.ensureDefaultPrizes();
+
   const tanggal = new Date();
   tanggal.setHours(0, 0, 0, 0);
 
@@ -22,7 +28,6 @@ async function lakukanGacha(username) {
   const prizes = await gachaRepository.getPrizesList();
 
   const winChance = Math.random() < 0.2;
-
   let result;
 
   if (winChance) {
@@ -34,7 +39,7 @@ async function lakukanGacha(username) {
 
       result = {
         menang: true,
-        prize: prize.name,
+        prize: prize.nama,
       };
     } else {
       result = {
@@ -67,10 +72,12 @@ async function getGenHistory() {
 }
 
 async function getPrizesList() {
-  const data = await gachaRepository.getPrizesList();
+  await gachaRepository.ensureDefaultPrizes();
 
-  return data.map((p) => ({
-    nama: p.name,
+  const prizes = await gachaRepository.getPrizesList();
+
+  return prizes.map((p) => ({
+    nama: p.nama,
     quota: p.quota,
     banyakPemenang: p.banyakPemenang,
     sisaQuota: p.quota - p.banyakPemenang,
@@ -80,17 +87,12 @@ async function getPrizesList() {
 async function getWinners() {
   const data = await gachaRepository.getGenHistory();
 
-  // isi fungsi maskingnya
   return data
     .filter((dt) => dt.menang)
     .map((dt) => {
       const namaMasked = dt.username
         .split('')
-        .map((karakter) => {
-          if (karakter === ' ') return ' ';
-
-          return Math.random() > 0.77 ? karakter : '*';
-        })
+        .map((char, i) => (i < 2 ? char : '*'))
         .join('');
 
       return {
