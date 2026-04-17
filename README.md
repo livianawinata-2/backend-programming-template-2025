@@ -16,3 +16,14 @@
 2. Create a new folder in `./src/api/components` (if needed). Remember to separate your codes to repositories, services, controllers, and routes.
 3. Add the new route in `./src/api/routes.js`.
 4. Test your new endpoints in the API client app.
+
+## Cara Akses API gacha
+POST ke http://localhost:5000/api/gacha/ dengan format { "username": "nama user" }
+
+GET history gacha semua user ke http://localhost:5000/api/gacha/history
+
+GET history gacha khusus 1 user dengan http://localhost:5000/api/gacha/history/:username misalnya http://localhost:5000/api/gacha/livi
+
+GET data hadiah serta quota yang tersisa melalui http://localhost:5000/api/prizes
+
+GET data pemenang gacha melalui http://localhost:5000/api/winners
